@@ -21,8 +21,16 @@ function App() {
   useEffect(() => {
     const fetchData = () => {
       const xhr = new XMLHttpRequest();
-      
-      xhr.onreadystatechange = () => {
+
+      const url = 'http://localhost/espacios.php';
+ 
+      xhr.open('GET', url, true);
+
+      xhr.onreadystatechange = recogerDatos;
+
+      xhr.send(null);
+
+      function recogerDatos(){
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             const jsonData = JSON.parse(xhr.responseText);
@@ -31,10 +39,7 @@ function App() {
             console.error('Error en la solicitud:', xhr.statusText);
           }
         }
-      };
-  
-      xhr.open('GET', 'http://localhost/espacios.php', true);
-      xhr.send(null);
+      }
     };
   
     fetchData();
